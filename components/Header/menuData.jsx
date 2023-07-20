@@ -8,8 +8,8 @@ const menuData = [
   },
   {
     id: 2,
-    title: "About",
-    path: "/about",
+    title: "Classes",
+    path: "/classes",
     newTab: false,
   },
   {
@@ -31,8 +31,8 @@ const menuData = [
     submenu: [
       {
         id: 41,
-        title: "About Page",
-        path: "/about",
+        title: "Classes Page",
+        path: "/classes",
         newTab: false,
       },
       {

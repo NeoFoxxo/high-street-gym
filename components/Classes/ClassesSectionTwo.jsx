@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const AboutSectionTwo = () => {
+const ClassesSectionTwo = () => {
   return (
     <section className="py-16 md:py-20 lg:py-28">
       <div className="container">
@@ -11,7 +11,7 @@ const AboutSectionTwo = () => {
               data-wow-delay=".15s"
             >
               <Image
-                src="/images/about/about-image-2.svg"
+                src="/images/classes/about-image-2.svg"
                 alt="about image"
                 fill
               />
@@ -21,11 +21,10 @@ const AboutSectionTwo = () => {
             <div className="wow fadeInUp max-w-[470px]" data-wow-delay=".2s">
               <div className="mb-9">
                 <h3 className="mb-4 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-xl xl:text-2xl">
-                  Bug free code
+                  Classes
                 </h3>
                 <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Yoga
                 </p>
               </div>
               <div className="mb-9">
@@ -54,4 +53,4 @@ const AboutSectionTwo = () => {
   );
 };
 
-export default AboutSectionTwo;
+export default ClassesSectionTwo;
