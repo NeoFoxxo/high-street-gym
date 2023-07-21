@@ -1,16 +1,17 @@
 'use client';
 
-import Image from "next/image";
 import SectionTitle from "../Common/SectionTitle";
-import { Children, useState } from "react";
+import { useState } from "react";
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   WeekView,
+  AppointmentTooltip,
   Appointments,
+  AppointmentForm,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-const currentDate = '2023-07-20';
+const currentDate = '2023-07-18';
 const schedulerData = [
   { startDate: '2023-07-18 10:00:00', endDate: '2023-07-18 10:30:00', title: 'Yoga', id: '2' },
   { startDate: '2023-07-18 10:40:00', endDate: '2023-07-18 11:30:00', title: 'Zumba' },
@@ -22,6 +23,22 @@ const schedulerData = [
 ];
 
 const ClassesSectionOne = () => {
+
+  const [showDialog, setShowDialog] = useState(false);
+  const [appointmentData, setAppointmentData] = useState(null);
+
+  const handleAppointmentClick = (props) => {
+    console.log(props)
+    setAppointmentData(props.data);
+    setShowDialog(true);
+  };
+
+  const onAppointmentClick = props => (
+    <Appointments.AppointmentContent
+      {...props}
+      onClick={() => handleAppointmentClick(props)}
+    />
+  );
 
   return (
     <section id="classes" className="pt-[6rem] lg:pt-[10rem]">
@@ -39,10 +56,10 @@ const ClassesSectionOne = () => {
                 className="wow fadeInUp mb-12 lg:max-w-[790px] lg:mb-0"
                 data-wow-delay=".15s"
               >
-              <Scheduler data={schedulerData}>
-                <ViewState currentDate={currentDate}/>
+              <Scheduler data={schedulerData} currentDate={currentDate}>
+                <ViewState  />
                 <WeekView startDayHour={9} endDayHour={19} cellDuration={60} />
-                <Appointments onClick={console.log("test")} />
+                <Appointments appointmentContentComponent={onAppointmentClick} />
               </Scheduler>
 
               </div>
@@ -54,17 +71,19 @@ const ClassesSectionOne = () => {
                 data-wow-delay=".2s"
               >
               <div className="lg:mt-20 mx-auto max-w-full lg:mr-[4rem]">
+                {showDialog ? (
                   <div className="card w-80 md:w-96 bg-base-100 shadow-xl">
-                    <figure><img src="/images/Classes/yoga.jpg" alt="Shoes" /></figure>
+                    <figure><img src="/images/classes/yoga.jpg" /></figure>
                     <div className="card-body">
-                      <h2 className="card-title text-2xl">Yoga</h2>
-                      <p className="font-bold">July 18 Tuesday 10am - 11am</p>
-                      <p>Learn yoga and Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis libero dolore similique maxime eum laudantium voluptate, perspiciatis omnis deleniti accusantium!</p>
+                      <h2 className="card-title text-2xl">{appointmentData.title}</h2>
+                      <p className="font-bold">{appointmentData.startDate}{appointmentData.endDate}</p>
+                      <p>test</p>
                       <div className="card-actions justify-end">
                         <button className="btn btn-primary">Book Now</button>
                       </div>
                     </div>
                   </div>
+                ) : null}
                 </div>
               </div>
             </div>
