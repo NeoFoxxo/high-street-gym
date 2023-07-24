@@ -1,38 +1,63 @@
 'use client';
 
 import SectionTitle from "../Common/SectionTitle";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   WeekView,
-  AppointmentTooltip,
   Appointments,
-  AppointmentForm,
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const currentDate = '2023-07-18';
-const schedulerData = [
-  { startDate: '2023-07-18 10:00:00', endDate: '2023-07-18 10:30:00', title: 'Yoga', id: '2' },
-  { startDate: '2023-07-18 10:40:00', endDate: '2023-07-18 11:30:00', title: 'Zumba' },
-  { startDate: '2023-07-18 11:40:00', endDate: '2023-07-18 12:00:00', title: 'Indoor Cycling' },
-  { startDate: '2023-07-18 12:10:00', endDate: '2023-07-18 13:30:00', title: 'Pilates' },
-  { startDate: '2023-07-18 13:40:00', endDate: '2023-07-18 15:00:00', title: 'Boxing' },
-  { startDate: '2023-07-18 15:10:00', endDate: '2023-07-18 16:10:00', title: 'Abs' },
-  { startDate: '2023-07-18 17:10:00', endDate: '2023-07-18 18:10:00', title: 'High-Intensity Interval Training' },
-];
 
 const ClassesSectionOne = () => {
 
   const [showDialog, setShowDialog] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState(null);
   const [appointmentData, setAppointmentData] = useState(null);
+  const [classData, setClassData] = useState('')
+  const { data: session, status } = useSession();
 
+  if (status === "authenticated") {
+    console.log(session.user.user_id)
+  }
+
+  // get the class data from the api endpoint
+  useEffect(()=> {
+    async function getClasses(){
+      const classesEndpoint = "http://localhost:3000/api/getclasses"
+      const response = await fetch(classesEndpoint);
+      const classData = await response.json();
+      setClassData(classData)
+      setLoading(false)
+    }
+    getClasses();
+  }, []);
+
+  async function bookClass(){
+    setSubmitting(true)
+    // send the userid to the bookclass endpoint
+    await fetch('api/bookclass', {
+      method: 'POST',
+      body: JSON.stringify({userid: session.user.user_id}),
+    })
+    setSubmitting(false);
+    setMessage("Class successfully booked!");
+  }
+  
   const handleAppointmentClick = (props) => {
-    console.log(props)
+    console.log(props.data)
     setAppointmentData(props.data);
     setShowDialog(true);
+    setMessage(null)
   };
 
+  // get the onclick event from the react component and show that info in my custom card
   const onAppointmentClick = props => (
     <Appointments.AppointmentContent
       {...props}
@@ -40,53 +65,105 @@ const ClassesSectionOne = () => {
     />
   );
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const time = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    return `${time}`;
+  };
+
   return (
-    <section id="classes" className="pt-[6rem] lg:pt-[10rem]">
+    <section id="classes" className="pt-[6rem] lg:pt-[10rem] h-screen">
       <div className="container">
         <div className="border-b border-body-color/[.15] pb-16 dark:border-white/[.15] md:pb-20 lg:pb-28">
           <div className="-mx-4 flex flex-wrap items-center">
-            <div className="px-4 lg:w-2/1">
-              <SectionTitle
-                title="View Gym Classes"
-                paragraph="View and book available classes in the timetable below"
-                mb="44px"
-              />
+              {isLoading ? (
+                <div className="mx-auto">
+                  <span className="loading loading-bars loading-lg"></span>
+                </div>
+              ) : (
+                <>
+                  <div className="px-4 lg:w-2/1">
+                    <SectionTitle
+                      title="View Gym Classes"
+                      paragraph="View and book available classes in the timetable below"
+                      mb="44px"
+                    />
 
-              <div
-                className="wow fadeInUp mb-12 lg:max-w-[790px] lg:mb-0"
-                data-wow-delay=".15s"
-              >
-              <Scheduler data={schedulerData} currentDate={currentDate}>
-                <ViewState  />
-                <WeekView startDayHour={9} endDayHour={19} cellDuration={60} />
-                <Appointments appointmentContentComponent={onAppointmentClick} />
-              </Scheduler>
+                    <div
+                      className="wow fadeInUp mb-12 max-w-[350px] lg:max-w-[880px] lg:mb-0"
+                      data-wow-delay=".15s"
+                    >
 
-              </div>
-            </div>
+                    <Scheduler data={classData}>
+                      <ViewState currentDate={currentDate} />
+                      <WeekView startDayHour={9} endDayHour={19} cellDuration={60} />
+                      <Appointments appointmentContentComponent={onAppointmentClick} />
+                    </Scheduler>
 
-            <div className="px-4 lg:w-2/1">
-              <div
-                className="wow fadeInUp relative mx-auto aspect-[25/24] max-w-[500px] lg:mr-0"
-                data-wow-delay=".2s"
-              >
-              <div className="lg:mt-20 mx-auto max-w-full lg:mr-[4rem]">
-                {showDialog ? (
-                  <div className="card w-80 md:w-96 bg-base-100 shadow-xl">
-                    <figure><img src="/images/classes/yoga.jpg" /></figure>
-                    <div className="card-body">
-                      <h2 className="card-title text-2xl">{appointmentData.title}</h2>
-                      <p className="font-bold">{appointmentData.startDate}{appointmentData.endDate}</p>
-                      <p>test</p>
-                      <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Book Now</button>
+                    </div>
+                  </div>
+
+                  <div className="px-4 lg:w-2/1">
+                    <div
+                      className="wow fadeInUp relative mx-auto aspect-[25/24] max-w-[500px] lg:mr-0"
+                      data-wow-delay=".2s"
+                    >
+                    <div className="lg:mt-20 mx-auto max-w-full lg:mr-[4rem]">
+                      {showDialog ? (
+                        <div className="card w-80 md:w-96 bg-base-100 shadow-xl">
+                          <figure><img src={appointmentData.image} /></figure>
+                          <div className="card-body">
+                            <h2 className="card-title text-2xl">{appointmentData.title}</h2>
+                            <p className="font-bold">{formatDate(appointmentData.startDate)} to {formatDate(appointmentData.endDate)}</p>
+                            <p>{appointmentData.description}</p>
+                            <div className="card-actions justify-start pt-4">
+                              {/* if the user is not logged in show the error modal on click instead of the book modal */}
+                              {session ? (
+                                <button className="btn btn-primary" onClick={()=>window.book_modal.showModal()}>Book Now</button>
+                              ) : (
+                                <button className="btn btn-primary" onClick={()=>window.error_modal.showModal()}>Book Now</button>
+                              )}
+                              <dialog id="book_modal" className="modal">
+                                <form method="dialog" className="modal-box">
+                                  <h3 className="font-bold text-xl">Book {appointmentData.title} Class</h3>
+                                  <p className="py-4">Class info Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque iure consectetur corporis ipsa aliquid sed culpa quod delectus officia alias?</p>
+                                  <div className="modal-action">
+                                    {isSubmitting ? (
+                                      <span class="loading loading-spinner loading-lg text-primary mr-auto"></span>
+                                    ) : (
+                                      <button className="btn btn-primary mr-auto" onClick={bookClass}>Book Class</button>
+                                    )}
+                                    <button className="btn">Close</button>
+                                  </div>
+                                  {message && <div className="text-primary font-bold pt-5">{message}</div>}
+                                </form>
+                              </dialog>
+                              <dialog id="error_modal" className="modal">
+                                <form method="dialog" className="modal-box">
+                                  <h3 className="font-extrabold text-xl">You must be signed in to book a class</h3>
+                                  <p className="py-4">Sign in to book a class</p>
+                                  <div className="modal-action">
+                                    <Link className="btn btn-primary mr-auto" href="/signin">Sign In</Link>
+                                    <button className="btn">Close</button>
+                                  </div>
+                                </form>
+                              </dialog>
+                            </div>
+                          </div>
+                        </div>
+                      ) : 
+                        <div className="card w-80 md:w-96 bg-base-100 shadow-xl">
+                          <div className="card-body">
+                            <h2 className="card-title text-2xl">Choose a class</h2>
+                            <p>Select a class in the timetable to book and view its details</p>
+                          </div>
+                        </div>
+                      }
                       </div>
                     </div>
                   </div>
-                ) : null}
-                </div>
-              </div>
-            </div>
+                </>
+              )}
           </div>
         </div>
       </div>

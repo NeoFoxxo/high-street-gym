@@ -4,9 +4,9 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const AuthButtons = () => {
-  const { data: session } = useSession();
+  const { status } = useSession()
 
-  if (session && session.user) {
+  if (status === "authenticated") {
     return (
       <div className="flex items-center justify-end pr-16 lg:pr-0">
         <button

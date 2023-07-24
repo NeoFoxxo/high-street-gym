@@ -12,7 +12,7 @@ export async function POST(request){
     if (user.length > 0 && (await bcrypt.compare(body.password, user[0].password))){
 
         // if the password is valid save the entire user row info without the password into a cookie
-        const {password, ...userWithoutPass} = user;
+        const {password, ...userWithoutPass} = user[0];
         return new Response(JSON.stringify(userWithoutPass));
     }
     else {

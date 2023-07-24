@@ -22,12 +22,16 @@ const handler = NextAuth({
             body: JSON.stringify({
               email: credentials?.email,
               password: credentials?.password,
+              user_role: credentials?.user_role,
+              username: credentials?.username,
+              user_id: credentials?.user_id
             })
           })
     
           const user = await res.json();
 
           if (user) {
+            console.log(user)
             // Any object returned will be saved in `user` property of the JWT
             return user
           } 
@@ -42,7 +46,17 @@ const handler = NextAuth({
     ],
     pages: {
       signIn: "/signin"
+    },
+    callbacks: {
+      async jwt({ token, user }) {
+        return {...token, ...user};
+    },
+    async session({session, token}) {
+      session.user = token
+
+      return session;
     }
+  }
 });
 
 export { handler as GET, handler as POST };
