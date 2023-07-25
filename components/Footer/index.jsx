@@ -30,118 +30,41 @@ const Footer = () => {
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
                 <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                  Useful Links
+                  Pages
                 </h2>
                 <ul>
                   <li>
-                    <a
-                      href="/"
+                    <Link
+                      href="/blog"
                       className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
                     >
-                      {" "}
-                      Blog{" "}
-                    </a>
+                    Blog
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      Pricing{" "}
-                    </a>
+                    <Link
+                        href="/classes"
+                        className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
+                      >
+                      Classes
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      About{" "}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
-              <div className="mb-12 lg:mb-16">
-                <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                  Terms
-                </h2>
-                <ul>
-                  <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      TOS{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      Privacy Policy{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      Refund Policy{" "}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-3/12">
-              <div className="mb-12 lg:mb-16">
-                <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                  Support & Help
-                </h2>
-                <ul>
-                  <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      Open Support Ticket{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      Terms of Use{" "}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
-                    >
-                      {" "}
-                      About{" "}
-                    </a>
+                    <Link
+                        href="/signup"
+                        className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
+                      >
+                      Sign Up
+                    </Link>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-primary/10 py-8">
+        <div className="bg-primary/10 py-4">
           <div className="container">
-            <p className="text-center text-base text-body-color dark:text-white">
+            <p className="text-center text-base text-body-black">
               &copy; High Street Gym 2023
             </p>
           </div>
