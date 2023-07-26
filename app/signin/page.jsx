@@ -10,10 +10,10 @@ import { useRouter } from 'next/navigation'
 const signInSchema = Yup.object().shape({
 
   email: Yup.string().email('Invalid email')
-  .required('Required'),
+  .required('Email Required'),
 
   password: Yup.string()
-  .required('Required'),
+  .required('Password Required'),
 });
 
 const SigninPage = () => {

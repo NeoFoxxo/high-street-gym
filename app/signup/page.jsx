@@ -8,18 +8,18 @@ import * as Yup from 'yup';
 const SignUpSchema = Yup.object().shape({
 
   // password must be a minimum of 3 characters
-  username: Yup.string().required('Required')
-  .required('Required')
+  username: Yup.string()
+  .required('Username Required')
   .min(3, 'Username is too short')
   .max(20, 'Username is too long')
   .matches(/^[a-zA-Z0-9]+$/, 'Username can only contain letters and numbers'),
 
   email: Yup.string().email('Invalid email')
-  .required('Required'),
+  .required('Email Required'),
 
   // password must be a minimum of 5 characters
   password: Yup.string()
-  .required('Required')
+  .required('Password Required')
   .min(5, 'Password is too short'),
 
 });
