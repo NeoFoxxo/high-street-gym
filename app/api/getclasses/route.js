@@ -9,7 +9,7 @@ export async function GET(){
             FROM class_schedule
             JOIN classes ON class_schedule.class_id = classes.class_id
             JOIN trainers ON classes.class_id = trainers.class_id
-            GROUP BY classes.class_id;`);
+            GROUP BY class_schedule.class_schedule_id;`);
         return new Response(JSON.stringify(classData));
     }
     catch (error) {

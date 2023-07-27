@@ -25,6 +25,7 @@
     "react-dom": "18.2.0",
     "react-modal-video": "^2.0.0",
     "sharp": "^0.32.3",
+    "xml2js": "^0.6.2",
     "yup": "^1.2.0"
   },
   "devDependencies": {

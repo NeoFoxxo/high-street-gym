@@ -1,7 +1,7 @@
 import SingleBlog from "@/components/Blog/SingleBlog";
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Link from 'next/link';
 import db from "../utils/database";
+import CreateBlogButton from "@/components/Blog/CreateBlogButton";
 
 const Blog = async () => {
 
@@ -9,7 +9,6 @@ const Blog = async () => {
   const [blogDataRaw] = await db.execute(
     `SELECT post_id, title, article, username as author, publish_date FROM blog_posts
     JOIN user ON blog_posts.user_id = user.user_id`);
-
 
   // format the publish date from the default MySQL date format
   const blogData = blogDataRaw.map((rawPost) => {
@@ -29,9 +28,7 @@ const Blog = async () => {
       />
       <section className="pt-[80px] pb-[80px]">
         <div className="container">
-          <div className="mb-10 mt-0 md:-mt-[5rem] text-center">
-            <Link href={"/create-blog"} className="rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">Create a Blog Post</Link>
-          </div>
+          <CreateBlogButton />
             <div className="-mx-4 flex flex-wrap justify-center">
               {blogData.map((blog) => (
                 <div
