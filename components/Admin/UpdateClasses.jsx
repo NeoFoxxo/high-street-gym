@@ -40,7 +40,6 @@ const UpdateClasses = () => {
     }
     // if successful add success message
     else {
-      console.log(response)
       setLoading(false)
       setSuccess(true)
     }
@@ -81,7 +80,7 @@ const UpdateClasses = () => {
                   }}
                   validationSchema={updateClassesSchema }
                   onSubmit={(values) => {
-                    // call submit function and reset form
+                    // call submit function
                     updateClasses(values);
                   }}
                 >

@@ -6,7 +6,7 @@ export async function POST(request){
     const body = await request.json();
 
     // get user from db
-    const [user] = await db.execute(`SELECT * FROM user WHERE email = "${body.email}"`);
+    const [user] = await db.execute('SELECT * FROM user WHERE email = ?', [body.email]);
 
     // compare the given password to the hashed password in the db
     if (user.length > 0 && (await bcrypt.compare(body.password, user[0].password))){

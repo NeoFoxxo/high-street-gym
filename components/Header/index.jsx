@@ -2,18 +2,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import AuthButtons from "./AuthButtons";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
-
-  // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [sticky, setSticky] = useState(false);
+  const [isAuthenticated, setAuthenticated] = useState(false)
+  const [isAdmin, setAdmin] = useState(false)
+  const { data: session, status} = useSession()
+
+  useEffect(() => {
+
+    if (status === "authenticated") {
+      setAuthenticated(true)
+      if (session?.user.user_role === 1) {
+        setAdmin(true)
+      }
+    }
+    window.addEventListener("scroll", handleStickyNavbar);
+  }, [status, session]);
+
   const navbarToggleHandler = () => {
     setNavbarOpen(!navbarOpen);
   };
 
-  // Sticky Navbar
-  const [sticky, setSticky] = useState(false);
   const handleStickyNavbar = () => {
     if (window.scrollY >= 80) {
       setSticky(true);
@@ -21,16 +33,13 @@ const Header = () => {
       setSticky(false);
     }
   };
-  useEffect(() => {
-    window.addEventListener("scroll", handleStickyNavbar);
-  });
 
   return (
     <>
       <header
-        className={`header top-0 left-0 z-40 flex w-full items-center bg-transparent ${
+        className={`header top-0 left-0 z-40 flex w-full items-center bg-white h-20 ${
           sticky
-            ? "!fixed !z-[9999] !bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition dark:!bg-primary dark:!bg-opacity-20"
+            ? "!fixed !z-[9999] !bg-white !bg-opacity-80 shadow-sticky backdrop-blur-sm !transition"
             : "absolute"
         }`}
       >
@@ -61,24 +70,24 @@ const Header = () => {
                   className="absolute right-4 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                 >
                   <span
-                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
+                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300  ${
                       navbarOpen ? " top-[7px] rotate-45" : " "
                     }`}
                   />
                   <span
-                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
+                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300  ${
                       navbarOpen ? "opacity-0 " : " "
                     }`}
                   />
                   <span
-                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white ${
+                    className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 ${
                       navbarOpen ? " top-[-8px] -rotate-45" : " "
                     }`}
                   />
                 </button>
                 <nav
                   id="navbarCollapse"
-                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50 bg-white py-4 px-6 duration-300 dark:border-body-color/20 dark:bg-dark lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
+                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50  py-4 px-6 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
                     navbarOpen
                       ? "visibility top-full opacity-100"
                       : "invisible top-[120%] opacity-0"
@@ -88,7 +97,7 @@ const Header = () => {
                       <li className="group relative">
                         <Link
                           href={"/"}
-                          className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                          className={`flex py-2 text-base text-dark group-hover:opacity-70  lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
                         >
                           Home
                         </Link>
@@ -96,7 +105,7 @@ const Header = () => {
                       <li className="group relative">
                         <Link
                           href={"/classes"}
-                          className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                          className={`flex py-2 text-base text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
                         >
                           Classes
                         </Link>
@@ -104,23 +113,49 @@ const Header = () => {
                       <li className="group relative">
                         <Link
                           href={"/blog"}
-                          className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                          className={`flex py-2 text-base text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
                         >
                           Blog
                         </Link>
                       </li>
-                      <li className="group relative">
-                        <Link
-                          href={"/admin"}
-                          className={`flex py-2 text-base text-dark group-hover:opacity-70 dark:text-white lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
-                        >
-                          Admin
-                        </Link>
-                      </li>
+                      {isAdmin ? (
+                        <li className="group relative">
+                          <Link
+                            href={"/admin"}
+                            className={`flex py-2 text-base text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                          >
+                            Admin
+                          </Link>
+                        </li>
+                      ) : null}
                   </ul>
                 </nav>
               </div>
-              <AuthButtons />
+              {!isAuthenticated ? (
+                <div className="flex items-center justify-end pr-16 lg:pr-0">
+                  <Link
+                  href="/signin"  
+                  className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 md:block"
+                  >
+                  Sign In
+                  </Link>
+                  <Link
+                  href="/signup"
+                  className="ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9"
+                  >
+                  Sign Up
+                  </Link>
+                </div>
+              ) : (
+                <div className="flex items-center justify-end pr-16 lg:pr-0">
+                  <button
+                  onClick={() => signOut()}
+                  className="hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 md:block"
+                  >
+                  Sign Out
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 {
   "name": "high-street-gym",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,17 +13,14 @@
     "@devexpress/dx-react-scheduler": "^4.0.5",
     "@devexpress/dx-react-scheduler-material-ui": "^4.0.5",
     "bcrypt": "^5.1.0",
-    "classnames": "^2.3.2",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "formik": "^2.4.2",
     "mysql2": "^3.5.2",
     "next": "13.4.10",
     "next-auth": "^4.22.3",
-    "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-modal-video": "^2.0.0",
     "sharp": "^0.32.3",
     "xml2js": "^0.6.2",
     "yup": "^1.2.0"

@@ -7,9 +7,10 @@ import { Scheduler, WeekView, Appointments } from '@devexpress/dx-react-schedule
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
+// hardcode current date
 const currentDate = '2023-07-18';
 
-const ClassesSectionOne = () => {
+const ClassesSection = () => {
   const [selectedTrainer, setSelectedTrainer] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
   const [showDialog, setShowDialog] = useState(false);
@@ -18,16 +19,12 @@ const ClassesSectionOne = () => {
   const [message, setMessage] = useState(null);
   const [appointmentData, setAppointmentData] = useState(null);
   const [classData, setClassData] = useState('')
-  const { data: session, status } = useSession();
-
-  if (status === "authenticated") {
-    console.log(session.user.user_id)
-  }
+  const { data: session } = useSession();
 
   // get the class data from the api endpoint
   useEffect(()=> {
     async function getClasses(){
-      const classesEndpoint = "http://localhost:3000/api/getclasses"
+      const classesEndpoint = "api/getclasses"
       const response = await fetch(classesEndpoint);
       const classData = await response.json();
       setClassData(classData)
@@ -80,6 +77,7 @@ const ClassesSectionOne = () => {
     />
   );
 
+  // format the dates from the MySQL format before displaying it on the custom card
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const time = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -197,4 +195,4 @@ const ClassesSectionOne = () => {
   );
 };
 
-export default ClassesSectionOne;
+export default ClassesSection;

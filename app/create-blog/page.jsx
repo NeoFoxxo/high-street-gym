@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
 
 const blogPostSchema = Yup.object().shape({
 
@@ -22,13 +21,7 @@ const CreateBlog = () => {
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
-  const { data: session, status } = useSession();
-  const { push } = useRouter();
-
-  // if the user is not authenticated redirect them to the signin page
-  if (status != "authenticated") {
-    push("/signin")
-  }
+  const { data: session } = useSession();
 
   async function createPost(formData) {
     setErrorMsg(null)

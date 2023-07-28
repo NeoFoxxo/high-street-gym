@@ -18,6 +18,7 @@ const BlogDetailsPage = async ({params}) => {
     return { ...rawPost, publish_date: formattedDate };
   })
 
+  // if the user enters a blog id in the url that does not exist show the error page
   if (blogDetailsRaw[0] === undefined) {
     return (
       <>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE AdminUser [
+  <!ELEMENT AdminUser (email, username, password)>
+  <!ELEMENT email (#PCDATA)>
+  <!ELEMENT username (#PCDATA)>
+  <!ELEMENT password (#PCDATA)>
+]>
+
+<AdminUser>
+  <email>michael@gmail.com</email>
+  <username>MichaelBrown</username>
+  <password>password2</password>
+</AdminUser>
+

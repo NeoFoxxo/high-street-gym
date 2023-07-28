@@ -4,8 +4,6 @@ export async function POST(request){
 
     const body = await request.json();
 
-    console.log(body)
-
     try {
         // insert blog post into the posts table
         const [result] = await db.execute(

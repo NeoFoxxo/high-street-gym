@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-const addTrainerSchema = Yup.object().shape({
+const addAdminSchema = Yup.object().shape({
 
   // check if the submitted file is an XML file
-  trainer: Yup.mixed()
-    .required("Trainer Document Required")
+  admin: Yup.mixed()
+    .required("Admin Document Required")
     .test('fileType', 'File must be XML', (value) => {
       if (value) {
         return ['text/xml'].includes(value.type);
@@ -17,21 +17,21 @@ const addTrainerSchema = Yup.object().shape({
     }),
 });
 
-const AddTrainer = () => {
+const AddAdmin = () => {
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  async function addTrainer(formData) {
+  async function addAdmin(formData) {
     setErrorMsg(null)
     setLoading(true)
 
-    const response = await fetch('/api/addtrainer', {
+    const response = await fetch('/api/addadmin', {
       method: 'POST',
       headers: {
         'Content-Type': 'text/xml'
       },
-      body: formData.trainer
+      body: formData.admin
     });
 
     // if error add error message
@@ -41,14 +41,13 @@ const AddTrainer = () => {
     }
     // if successful add success message
     else {
-      console.log(response)
       setLoading(false)
       setSuccess(true)
     }
   }
 
   return (
-    <section id="addtrainer">
+    <section id="addadmin">
       <div className="container">
         <div className="-mx-4 flex flex-wrap justify-center">
           <div className="w-50 px-4 text-center">
@@ -60,7 +59,7 @@ const AddTrainer = () => {
               {isSuccess ? (
                 <div className="mb-5 flex flex-col">
                   <div className="alert alert-success mb-5">
-                    <span className="font-semibold text-lg mx-auto">Trainer successfully added!</span>
+                    <span className="font-semibold text-lg mx-auto">Admin user successfully added!</span>
                   </div>
                 </div>
               ) : null}
@@ -70,19 +69,19 @@ const AddTrainer = () => {
                 </div>
               ) : null}
               <h2 className="mb-3 text-2xl font-bold text-black sm:text-3xl lg:text-2xl xl:text-3xl">
-                Add Trainer
+                Add Admin User
               </h2>
               <p className="mb-12 text-base font-medium text-body-color">
-                Add a new High Street Gym trainer with an XML document
+                Add a new High Street Gym administrator with an XML document
               </p>
               <Formik
                   initialValues={{
-                    trainer: ""
+                    admin: ""
                   }}
-                  validationSchema={addTrainerSchema}
+                  validationSchema={addAdminSchema}
                   onSubmit={(values)  => {
-                    // call submit function and reset form
-                    addTrainer(values);
+                    // call submit function
+                    addAdmin(values);
                   }}
                 >
                 {({ errors, touched, setFieldValue  }) => (
@@ -91,23 +90,23 @@ const AddTrainer = () => {
                     <div className="w-full px-4">
                       <div className="mb-8">
                         <label
-                          htmlFor="trainer"
+                          htmlFor="admin"
                           className="mb-3 block text-md font-medium text-dark"
                         >
-                          Trainer Document
+                          Admin Document
                         </label>
                         <Field
                         className="file-input file-input-bordered file-input-secondary w-full max-w-sm"
-                        id="trainer"
-                        name="trainer"
+                        id="admin"
+                        name="admin"
                         value={undefined}
                         type="file"
                         onChange={(event)=> {
-                          setFieldValue("trainer", event.target.files[0]);
+                          setFieldValue("admin", event.target.files[0]);
                         }}
                         />
-                        {errors.trainer && touched.trainer ? (
-                        <div className="text-error">{errors.trainer}</div>
+                        {errors.admin && touched.admin ? (
+                        <div className="text-error">{errors.admin}</div>
                         ) : null}
                       </div>
                     </div>
@@ -116,7 +115,7 @@ const AddTrainer = () => {
                           <span class="loading loading-spinner loading-lg text-primary mx-auto"></span>
                         ) : (
                         <button className="rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp" type="submit">
-                          Add New Trainer
+                          Add New Admin
                         </button>
                         )}
                     </div>
@@ -132,4 +131,4 @@ const AddTrainer = () => {
   );
 };
 
-export default AddTrainer;
+export default AddAdmin;

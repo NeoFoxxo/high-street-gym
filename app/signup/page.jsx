@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from "next/link";
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const SignUpSchema = Yup.object().shape({
 
@@ -28,7 +30,8 @@ const SignupPage = () => {
   const [isLoading, setLoading] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
-
+  const { push } = useRouter();
+  
   async function Register(formData) {
     setLoading(true)
 
@@ -44,10 +47,16 @@ const SignupPage = () => {
       setLoading(false)
       setErrorMsg("An error occured")
     }
-    // if successful add success message
+    // if successful log the user in and redirect them to the home page
     else {
+      await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false
+      });
       setLoading(false)
       setSuccess(true)
+      push("/")
     }
 
   }

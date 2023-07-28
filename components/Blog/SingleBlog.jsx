@@ -2,7 +2,10 @@ import Link from "next/link";
 
 const SingleBlog = ({blog}) => {
   const { title, article, author, publish_date, post_id } = blog;
+
+  // if the article is over 80 characters slice it
   const articleSnippet = article.slice(0, 80)
+
   return (
     <>
       <div
@@ -13,7 +16,7 @@ const SingleBlog = ({blog}) => {
           <h3>
             <Link
               href={`/blog-details/${post_id}`}
-              className="mb-4 block text-xl font-bold text-black hover:text-primary dark:hover:text-primary sm:text-2xl"
+              className="mb-4 block text-xl font-bold text-black hover:text-primary sm:text-2xl"
             >
               {title}
             </Link>

@@ -1,9 +1,9 @@
-import ClassesSectionOne from "@/components/Classes/ClassesSectionOne";
+import ClassesSection from "@/components/Classes/ClassesSection";
 
 const ClassesPage = () => {
   return (
     <>
-      <ClassesSectionOne />
+      <ClassesSection />
     </>
   );
 };

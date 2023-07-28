@@ -28,24 +28,24 @@ const Footer = () => {
             </div>
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
-                <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
+                <h2 className="mb-10 text-xl font-bold text-black">
                   Pages
                 </h2>
                 <ul>
                   <li>
                     <Link
-                      href="/blog"
+                      href="/classes"
                       className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
                     >
-                    Blog
+                    Classes
                     </Link>
                   </li>
                   <li>
                     <Link
-                        href="/classes"
+                        href="/blog"
                         className="mb-4 inline-block text-base font-medium text-body-color hover:text-primary"
                       >
-                      Classes
+                      Blog
                     </Link>
                   </li>
                   <li>

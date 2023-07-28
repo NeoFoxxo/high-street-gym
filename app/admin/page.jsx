@@ -4,11 +4,16 @@ import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import UpdateClasses from '@/components/Admin/UpdateClasses';
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import AddTrainer from "@/components/Admin/AddTrainer";
+import AddAdmin from "@/components/Admin/AddAdmin";
 
 const Admin = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const { push } = useRouter();
+
+  // if the user does not have the admin role redirect them to the home page
+  if (session?.user.user_role === 0) {
+    push("/")
+  }
 
   return (
     <>
@@ -18,7 +23,7 @@ const Admin = () => {
       />
       <section id="admin" className="pt-[15px] pb-[80px]">
         <UpdateClasses />
-        <AddTrainer />
+        <AddAdmin />
       </section>
     </>
   );
