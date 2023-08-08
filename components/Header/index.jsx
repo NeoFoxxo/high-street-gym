@@ -1,5 +1,5 @@
-"use client";
-import Image from "next/image";
+'use client';
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
@@ -52,7 +52,7 @@ const Header = () => {
                   sticky ? "py-5 lg:py-2" : "py-8"
                 } `}
               >
-                <Image
+                <img
                   src="/images/logo/logo.svg"
                   alt="logo"
                   width={140}
@@ -87,7 +87,7 @@ const Header = () => {
                 </button>
                 <nav
                   id="navbarCollapse"
-                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50  py-4 px-6 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
+                  className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50  py-4 px-6 bg-white lg:!bg-transparent duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:p-0 lg:opacity-100 ${
                     navbarOpen
                       ? "visibility top-full opacity-100"
                       : "invisible top-[120%] opacity-0"
@@ -97,7 +97,7 @@ const Header = () => {
                       <li className="group relative">
                         <Link
                           href={"/"}
-                          className={`flex py-2 text-base text-dark group-hover:opacity-70  lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                          className={`flex py-2 text-base text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
                         >
                           Home
                         </Link>
@@ -128,6 +128,35 @@ const Header = () => {
                           </Link>
                         </li>
                       ) : null}
+                      {!isAuthenticated ? (
+                        <>
+                          <li className="group relative md:hidden">
+                            <Link
+                            href="/signin"  
+                            className={`flex py-2 text-base text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                            >
+                            Sign In
+                            </Link>
+                          </li>
+                          <li className="group relative md:hidden">
+                            <Link
+                            href="/signup"
+                            className={`flex py-2 text-base text-dark group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                            >
+                            Sign Up
+                            </Link>
+                          </li>
+                        </>
+                      ) : (
+                        <li className="group relative md:hidden">
+                          <button
+                          onClick={() => signOut()}
+                          className={`flex py-2 text-base text-dark font-bold group-hover:opacity-70 lg:mr-0 lg:inline-flex lg:py-6 lg:px-0`}
+                          >
+                          Sign Out
+                          </button>
+                        </li>
+                      )}
                   </ul>
                 </nav>
               </div>

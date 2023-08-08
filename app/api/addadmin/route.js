@@ -8,10 +8,10 @@ export async function POST(request){
 
     try { 
         // parse the xml in the request
-        const adminUser = await xml2js.parseStringPromise(adminXML);
-        const email = adminUser.AdminUser.email[0];
-        const username = adminUser.AdminUser.username[0];
-        const password = adminUser.AdminUser.password[0];
+        const adminDocument = await xml2js.parseStringPromise(adminXML);
+        const email = adminDocument.AdminUser.email[0];
+        const username = adminDocument.AdminUser.username[0];
+        const password = adminDocument.AdminUser.password[0];
 
         // insert the new admin user into the db
         await db.execute(

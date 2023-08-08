@@ -13,6 +13,7 @@ export async function POST(request){
         return new Response(JSON.stringify(result));
     }
     catch (error) {
-        return new Resonse('Error')
+        console.log(error)
+        return new Resonse("Error")
     }
 }

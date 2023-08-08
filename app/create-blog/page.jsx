@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 
 const blogPostSchema = Yup.object().shape({
 

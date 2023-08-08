@@ -3,7 +3,7 @@ import ErrorPage from "../../error/page";
 
 const BlogDetailsPage = async ({params}) => {
 
-  // get blog details
+  // get blog details based on the id provided in the url
   const [blogDetailsRaw] = await db.execute(
     `SELECT post_id, title, article, username as author, publish_date FROM blog_posts
     JOIN user ON blog_posts.user_id = user.user_id WHERE post_id = ${params.blogid};`);

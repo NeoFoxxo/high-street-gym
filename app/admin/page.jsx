@@ -1,10 +1,10 @@
 'use client';
 
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import UpdateClasses from '@/components/Admin/UpdateClasses';
-import Breadcrumb from "@/components/Common/Breadcrumb";
-import AddAdmin from "@/components/Admin/AddAdmin";
+import Breadcrumb from '@/components/Common/Breadcrumb';
+import AddAdmin from '@/components/Admin/AddAdmin';
 
 const Admin = () => {
   const { data: session } = useSession();
@@ -19,7 +19,7 @@ const Admin = () => {
     <>
       <Breadcrumb
         pageName="Admin"
-        description="Add a new Trainer and update the High Street Gym class schedule"
+        description="Add a new Admin user and update the High Street Gym class schedule"
       />
       <section id="admin" className="pt-[15px] pb-[80px]">
         <UpdateClasses />

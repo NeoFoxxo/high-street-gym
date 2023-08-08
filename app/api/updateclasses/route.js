@@ -7,10 +7,10 @@ export async function POST(request){
 
     try { 
         // parse the xml in the request
-        const classSchedule = await xml2js.parseStringPromise(classesXML);
+        const classesDocument = await xml2js.parseStringPromise(classesXML);
 
         // loop over all the ClassSchedule elements in the parsed object to get the class schedule details
-        classSchedule.ClassSchedules.ClassSchedule.forEach(async (singleClass) => {
+        classesDocument.ClassSchedules.ClassSchedule.forEach(async (singleClass) => {
           const classID = singleClass.classID[0];
           const startTime = singleClass.startTime[0];
           const endTime = singleClass.endTime[0];

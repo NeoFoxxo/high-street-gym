@@ -9,6 +9,6 @@ export async function POST(request){
         'INSERT INTO bookings (user_id, class_schedule_id, trainer_id) VALUES (?, ?, ?)', 
         [body.userid, body.classid, body.trainer],
     );
-
+    console.log(`Class ${body.classid} successfully booked for user ${body.userid} with trainer ${body.trainer}`)
     return new Response(JSON.stringify(result));
 }

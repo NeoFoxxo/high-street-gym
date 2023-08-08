@@ -1,5 +1,7 @@
 import db from "@/app/utils/database";
 
+export const revalidate = 0 // dont cache this data
+
 export async function GET(){
 
     try {

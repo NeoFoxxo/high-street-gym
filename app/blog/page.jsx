@@ -3,6 +3,8 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import db from "../utils/database";
 import CreateBlogButton from "@/components/Blog/CreateBlogButton";
 
+export const revalidate = 0 // dont cache this data
+
 const Blog = async () => {
 
   // get blog posts

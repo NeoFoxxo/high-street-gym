@@ -9,23 +9,23 @@
 ]>
 
 <ClassSchedules>
-
+  <!-- Each class id represents a different class type. Example: 2 = Yoga, 7 = Boxing, etc -->
   <ClassSchedule>
-    <classID>2</classID>
-    <startTime>2023-07-19 10:00</startTime>
-    <endTime>2023-07-19 10:30</endTime>
-  </ClassSchedule>
-
-  <ClassSchedule>
-    <classID>3</classID>
-    <startTime>2023-07-19 10:40</startTime>
-    <endTime>2023-07-19 11:10</endTime>
+    <classID>7</classID>
+    <startTime>2023-07-20 10:00</startTime>
+    <endTime>2023-07-20 10:30</endTime>
   </ClassSchedule>
 
   <ClassSchedule>
     <classID>4</classID>
-    <startTime>2023-07-19 11:20</startTime>
-    <endTime>2023-07-19 12:00</endTime>
+    <startTime>2023-07-20 11:00</startTime>
+    <endTime>2023-07-20 12:00</endTime>
+  </ClassSchedule>
+
+  <ClassSchedule>
+    <classID>6</classID>
+    <startTime>2023-07-20 13:20</startTime>
+    <endTime>2023-07-20 14:20</endTime>
   </ClassSchedule>
   
 </ClassSchedules>
