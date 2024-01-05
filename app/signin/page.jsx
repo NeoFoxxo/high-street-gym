@@ -69,6 +69,7 @@ const SigninPage = () => {
                           Your Email
                         </label>
                         <Field
+                          id="email"
                           type="email"
                           name="email"
                           placeholder="Enter your Email"
@@ -86,6 +87,7 @@ const SigninPage = () => {
                           Your Password
                         </label>
                         <Field
+                          id="password"
                           type="password"
                           name="password"
                           placeholder="Enter your Password"

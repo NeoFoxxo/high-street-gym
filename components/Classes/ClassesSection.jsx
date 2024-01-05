@@ -73,6 +73,7 @@ const ClassesSection = () => {
   const onAppointmentClick = props => (
     <Appointments.AppointmentContent
       {...props}
+      data-testid={`appointment-${props.data.startDate}`}
       onClick={() => handleAppointmentClick(props)}
     />
   );
