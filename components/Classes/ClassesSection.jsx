@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 // hardcode current date
-const currentDate = '2023-07-18';
+const currentDate = "2023-07-18";
 
 const ClassesSection = () => {
   const [selectedTrainer, setSelectedTrainer] = useState('');

@@ -42,6 +42,24 @@ const mockClassData = [
   }
 ]
 
+const hasSession = {
+  "data": {
+      "user": {
+          "email": "jason@gmail.com",
+          "user_id": 1,
+          "user_role": 1,
+          "username": "JasonYoung",
+          "iat": 1704426628,
+          "exp": 1707018628,
+          "jti": "be63e86d-5575-42fa-9430-d5a4078ece52"
+      },
+      "expires": "2024-02-04T03:50:28.346Z"
+  },
+  "status": "authenticated"
+}
+
+const noSession = { "data": null, "status": "unauthenticated"};
+
 describe("Class timetable functionality", () => {
   let user;
 
@@ -55,7 +73,7 @@ describe("Class timetable functionality", () => {
 
     fetchMock(mockClassData);
 
-    useSession.mockReturnValue({ "data": null, "status": "unauthenticated"});
+    useSession.mockReturnValue(noSession);
 
     await act(async () => 
       render(<ClassesSection/>)
@@ -73,21 +91,7 @@ describe("Class timetable functionality", () => {
   it("Should show the book modal if the user books a class and is authenticated", async () => {
     HTMLDialogElement.prototype.showModal = jest.fn(function(){ this.open = true; }); // mock dialog showModal()
     
-    useSession.mockReturnValue({
-      "data": {
-          "user": {
-              "email": "jason@gmail.com",
-              "user_id": 1,
-              "user_role": 1,
-              "username": "JasonYoung",
-              "iat": 1704426628,
-              "exp": 1707018628,
-              "jti": "be63e86d-5575-42fa-9430-d5a4078ece52"
-          },
-          "expires": "2024-02-04T03:50:28.346Z"
-      },
-      "status": "authenticated"
-    })
+    useSession.mockReturnValue(hasSession)
 
     fetchMock(mockClassData)
 
@@ -102,5 +106,27 @@ describe("Class timetable functionality", () => {
     const bookModal = screen.getByText("Book Yoga Class")
 
     expect(bookModal).toBeVisible();
+  })
+
+  it("Should diplay a success message after booking a class", async () => {
+    HTMLDialogElement.prototype.showModal = jest.fn(function(){ this.open = true; }); // mock dialog showModal()
+    
+    useSession.mockReturnValue(hasSession);
+
+    fetchMock(mockClassData);
+
+    await act(async () => 
+      render(<ClassesSection/>)
+    )
+
+    const cyclingAppointment = screen.getByTestId("appointment-2023-07-18T01:40:00.000Z");
+    await waitFor(() => user.click(cyclingAppointment));
+    const bookButton = screen.getByRole("button", { name: "Book Now" })
+    await waitFor(() => user.click(bookButton));
+    const confirmBookButton = screen.getByRole("button", { name: "Book Class" })
+    fetchMock({userid: 5, classid: 3, trainer: 2});
+    await waitFor(() => user.click(confirmBookButton));
+    
+    expect(screen.getByText("Class successfully booked!")).toBeInTheDocument();
   })
 })
