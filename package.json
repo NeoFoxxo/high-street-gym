@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "e2e": "jest --testPathPattern=e2e --watch"
   },
   "dependencies": {
     "@devexpress/dx-react-core": "^4.0.5",
@@ -22,6 +23,7 @@
     "next-auth": "^4.22.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "selenium-webdriver": "^4.16.0",
     "sharp": "^0.32.3",
     "xml2js": "^0.6.2",
     "yup": "^1.2.0"

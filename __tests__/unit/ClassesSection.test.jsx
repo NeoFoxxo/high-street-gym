@@ -1,6 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ClassesSection from "@/components/Classes/ClassesSection";
-import userEvent from "@testing-library/user-event";
 import { useSession } from "next-auth/react";
 import { fetchMock } from "@/__mocks__/fetch";
 import { act } from 'react-dom/test-utils';
@@ -61,10 +60,8 @@ const hasSession = {
 const noSession = { "data": null, "status": "unauthenticated"};
 
 describe("Class timetable functionality", () => {
-  let user;
 
   beforeEach(() => {
-    user = userEvent.setup(); 
     jest.clearAllMocks();
   })
 
@@ -80,9 +77,9 @@ describe("Class timetable functionality", () => {
     )
 
     const yogaAppointment = screen.getByTestId("appointment-2023-07-18T00:00:00.000Z");
-    await waitFor(() => user.click(yogaAppointment));
+    fireEvent.click(yogaAppointment);
     const bookButton = screen.getByRole("button", { name: "Book Now" })
-    await waitFor(() => user.click(bookButton));
+    fireEvent.click(bookButton)
     const errorModal = screen.getByText("You must be signed in to book a class")
 
     expect(errorModal).toBeVisible();
@@ -100,9 +97,9 @@ describe("Class timetable functionality", () => {
     )
 
     const yogaAppointment = screen.getByTestId("appointment-2023-07-18T00:00:00.000Z");
-    await waitFor(() => user.click(yogaAppointment));
+    fireEvent.click(yogaAppointment)
     const bookButton = screen.getByRole("button", { name: "Book Now" })
-    await waitFor(() => user.click(bookButton));
+    fireEvent.click(bookButton)
     const bookModal = screen.getByText("Book Yoga Class")
 
     expect(bookModal).toBeVisible();
@@ -120,12 +117,12 @@ describe("Class timetable functionality", () => {
     )
 
     const cyclingAppointment = screen.getByTestId("appointment-2023-07-18T01:40:00.000Z");
-    await waitFor(() => user.click(cyclingAppointment));
+    fireEvent.click(cyclingAppointment)
     const bookButton = screen.getByRole("button", { name: "Book Now" })
-    await waitFor(() => user.click(bookButton));
+    fireEvent.click(bookButton)
     const confirmBookButton = screen.getByRole("button", { name: "Book Class" })
     fetchMock({userid: 5, classid: 3, trainer: 2});
-    await waitFor(() => user.click(confirmBookButton));
+    await waitFor(() => fireEvent.click(confirmBookButton));
     
     expect(screen.getByText("Class successfully booked!")).toBeInTheDocument();
   })
