@@ -5,7 +5,6 @@ describe("E2E Signin functionality", () => {
    * @type {WebDriver}
    */
   let driver;
-  jest.setTimeout(10000);
 
   beforeEach(async () => {
     driver = await new Builder().forBrowser("chrome").build();
@@ -50,5 +49,3 @@ describe("E2E Signin functionality", () => {
   });
   
 })
-
-

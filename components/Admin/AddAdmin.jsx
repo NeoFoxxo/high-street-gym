@@ -90,15 +90,15 @@ const AddAdmin = () => {
                     <div className="w-full px-4">
                       <div className="mb-8">
                         <label
-                          htmlFor="admin"
+                          htmlFor="adminfile"
                           className="mb-3 block text-md font-medium text-dark"
                         >
                           Admin Document
                         </label>
                         <Field
                         className="file-input file-input-bordered file-input-secondary w-full max-w-sm"
-                        id="admin"
-                        name="admin"
+                        id="adminfile"
+                        name="adminfile"
                         value={undefined}
                         type="file"
                         onChange={(event)=> {
