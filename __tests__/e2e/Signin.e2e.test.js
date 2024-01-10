@@ -1,6 +1,6 @@
 import { Builder, By, until, WebDriver } from "selenium-webdriver";
 
-describe("E2E Signin functionality", () => {
+describe("E2E Sign in functionality", () => {
   /**
    * @type {WebDriver}
    */

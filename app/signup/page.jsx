@@ -49,14 +49,20 @@ const SignupPage = () => {
     }
     // if successful log the user in and redirect them to the home page
     else {
-      await signIn("credentials", {
+      const login = await signIn("credentials", {
         email: formData.email,
         password: formData.password,
         redirect: false
       });
-      setLoading(false)
-      setSuccess(true)
-      push("/")
+      if (login.error != null) {
+        setLoading(false)
+        setErrorMsg("An error occured when signing you in")
+      } 
+      else {
+        setLoading(false)
+        setSuccess(true)
+        push("/")
+      }
     }
 
   }
@@ -95,6 +101,7 @@ const SignupPage = () => {
                           Username
                         </label>
                         <Field
+                          id="username"
                           type="username"
                           name="username"
                           placeholder="Enter a Username"
@@ -112,6 +119,7 @@ const SignupPage = () => {
                           Email
                         </label>
                         <Field
+                          id="email"
                           type="email"
                           name="email"
                           placeholder="Enter an Email"
@@ -129,6 +137,7 @@ const SignupPage = () => {
                           Password
                         </label>
                         <Field
+                          id="password"
                           type="password"
                           name="password"
                           placeholder="Enter a Password"

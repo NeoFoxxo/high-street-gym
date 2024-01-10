@@ -25,6 +25,15 @@ To run this on your local machine, you will need to have the <strong>latest vers
 6. Then run the `npm run start` command
 7. Access the website on port 3000 and enjoy!
 
+## Running Tests
+
+High Street Gym includes a test suite that ensures the functionality of the app. This test suite includes unit tests written with Jest and React Testing Library along with End-to-End tests written with Selenium WebDriver.
+To run the tests use the following commands:
+
+* To run the entire test suite use `npm run test`
+* To only run end-to-end tests use `npm run e2e`
+* To only run unit tests use `npm run unit`
+
 ## Website Images
 <table>
   <tr>

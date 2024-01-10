@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch",
-    "e2e": "jest --testPathPattern=e2e --watch"
+    "test": "jest",
+    "unit": "jest --testPathPattern=unit",
+    "e2e": "jest --testPathPattern=e2e"
   },
   "dependencies": {
     "@devexpress/dx-react-core": "^4.0.5",
